@@ -1,11 +1,9 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from '../assets/argentBankLogo.png';
 import '../sass/components/_header.scss';
 
 function Header () {
-
-    const navigate = useNavigate();
     
     return (
         <header>
