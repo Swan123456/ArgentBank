@@ -1,5 +1,5 @@
 import React from "react";
-
+import '../sass/components/_item.scss'
 function Item ({ image, descriptionImage, title, description }) {
     return (
             <div className="feature-item">
