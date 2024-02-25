@@ -1,10 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../assets/argentBankLogo.png';
 import '../sass/components/_header.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../redux/actions/auth.actions';
+
 
 function Header () {
+    /* Updates user data on header component from state redux */
+    const isConnected = useSelector((state) => state.auth.token);
+    const firstname = useSelector((state) => state.user.userData.firstname);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     
+    const logoutHandler = () => {
+        dispatch(logout());
+        sessionStorage.clear();
+        localStorage.clear();
+        navigate('/');
+    }
     return (
         <header>
             <h1 className='sr-only'>Argent Bank</h1>
@@ -12,11 +27,13 @@ function Header () {
                 <Link to="/">
                     <img src={Logo} alt="Bank Logo" />
                 </Link> 
+                {isConnected ? (
                     <div className='connected'>
                         <Link to='/profile'>
                             <i className='fa-solid fa-2x fa-circle-user' />
+                            <p>{firstname}</p>
                         </Link>
-                        <Link to='/'>
+                        <Link to='/' onClick={logoutHandler}>
                             <i className='fa-solid fa-arrow-right-from-bracket' />
                             <p> Sign out </p>
                         </Link>
@@ -28,7 +45,7 @@ function Header () {
                             <p>Sign In</p>
                         </Link>
                     </div>
-                
+                )}
             </nav>
         </header>
     ) 
