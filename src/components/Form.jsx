@@ -48,9 +48,12 @@ function Form() {
       } else {
         const error = "Incorrect email/password";
         dispatch(loginFailed(error));
+        setErrorMessage(error);
       }
     } catch (error) {
       console.error(error);
+      dispatch(loginFailed("Une erreur s'est produite lors de la connexion"));
+      setErrorMessage("Une erreur s'est produite lors de la connexion");
     }
   };
 

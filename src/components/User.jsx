@@ -8,6 +8,7 @@ function User() {
   /* Updates user data on profile page from state redux */
   const token = useSelector((state) => state.auth.token)
   const userData = useSelector((state) => state.user.userData)
+  console.log(userData);
   /* Manages the appearance of the username modification form */
   const [display, setDisplay] = useState(true)
   /* Get username */
@@ -41,9 +42,9 @@ function User() {
       if (response.ok) {
         const data = await response.json()
         const username = data.body.userName
+        console.log(data) 
         /* 
                     Checking that the query response is indeed retrieved
-                    console.log(data) 
                 */
         dispatch(updateUsername(username))
         setDisplay(!display)
@@ -62,7 +63,6 @@ function User() {
           <h2>
             Welcome back
             <br />
-            {console.log(userData)}
             {userData.firstname} {userData.lastname} !
           </h2>
           <button className="edit-button" onClick={() => setDisplay(!display)}>
