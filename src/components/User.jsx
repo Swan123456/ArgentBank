@@ -1,60 +1,59 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { updateUsername } from '../redux/actions/user.actions.jsx'
-import { isValidName } from '../utils/regex.jsx'
-import '../sass/components/_userProfile.scss'
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFirstName } from "../redux/actions/user.actions.jsx";
+import { isValidName } from "../utils/regex.jsx";
+import "../sass/components/_userProfile.scss";
 
 function User() {
   /* Updates user data on profile page from state redux */
-  const token = useSelector((state) => state.auth.token)
-  const userData = useSelector((state) => state.user.userData)
-  console.log(userData);
+  const token = useSelector((state) => state.auth.token);
+  const userData = useSelector((state) => state.user.userData);
   /* Manages the appearance of the username modification form */
-  const [display, setDisplay] = useState(true)
+  const [display, setDisplay] = useState(true);
   /* Get username */
-  const [userName, setUserName] = useState('')
+  const [firstName, setFirstName] = useState("");
   /* Handle error message */
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   /* Asynchronous username update function */
   const handleSubmitUsername = async (event) => {
-    event.preventDefault()
-    if (!isValidName(userName)) {
-      setErrorMessage('Invalid username')
-      return
+    event.preventDefault();
+    if (!isValidName(firstName)) {
+      setErrorMessage("Invalid firstName");
+      return;
     } else {
-      setErrorMessage('')
+      setErrorMessage("");
     }
     try {
       const response = await fetch(
-        'http://localhost:3001/api/v1/user/profile',
+        "http://localhost:3001/api/v1/user/profile",
         {
-          method: 'PUT',
+          method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ userName }),
+          body: JSON.stringify({ firstName }),
         }
-      )
+      );
       if (response.ok) {
-        const data = await response.json()
-        const username = data.body.userName
-        console.log(data) 
+        const data = await response.json();
+        const firstName = data.body.firstName;
         /* 
                     Checking that the query response is indeed retrieved
+                    console.log(data) 
                 */
-        dispatch(updateUsername(username))
-        setDisplay(!display)
+        dispatch(updateFirstName(firstName));
+        setDisplay(!display);
       } else {
-        console.log('Invalid Fields')
+        console.log("Invalid Fields");
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   return (
     <div className="header">
@@ -63,6 +62,7 @@ function User() {
           <h2>
             Welcome back
             <br />
+            {console.log(userData)}
             {userData.firstname} {userData.lastname} !
           </h2>
           <button className="edit-button" onClick={() => setDisplay(!display)}>
@@ -74,30 +74,12 @@ function User() {
           <h2>Edit user info</h2>
           <form>
             <div className="edit-input">
-              <label htmlFor="username">User name:</label>
+              <label htmlFor="firstName">First name:</label>
               <input
                 type="text"
-                id="username"
-                defaultValue={userData.username}
-                onChange={(event) => setUserName(event.target.value)}
-              />
-            </div>
-            <div className="edit-input">
-              <label htmlFor="firstname">First name:</label>
-              <input
-                type="text"
-                id="firstname"
+                id="firstName"
                 defaultValue={userData.firstname}
-                disabled={true}
-              />
-            </div>
-            <div className="edit-input">
-              <label htmlFor="lastname">Last name:</label>
-              <input
-                type="text"
-                id="lastname"
-                defaultValue={userData.lastname}
-                disabled={true}
+                onChange={(event) => setFirstName(event.target.value)}
               />
             </div>
             <div className="buttons">
@@ -119,7 +101,7 @@ function User() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default User
+export default User;

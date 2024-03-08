@@ -33,11 +33,10 @@ function UserProfile () {
                         updatedAt: data.body.updatedAt,
                         id: data.body.id,
                         email: data.body.email,
-                        firstname: data.body.firstName,
-                        lastname: data.body.lastName,
-                        username: data.body.userName
+                        firstName: data.body.firstName,
+                        lastName: data.body.lastName,
+                        userName: data.body.userName
                     }
-                    console.log(userData);
                     dispatch(userProfile(userData));
                 } else {
                     console.log("erreur lors de la récupération du profil");
