@@ -40,9 +40,10 @@ function User() {
       );
       if (response.ok) {
         const data = await response.json();
-        const firstName = data.body.firstName;
-        dispatch(updateFirstName(firstName));
+        const updatedFirstName = data.body.firstName;
+        dispatch(updateFirstName(updatedFirstName));
         setDisplay(!display);
+
       } else {
         console.log("Invalid Fields");
       }

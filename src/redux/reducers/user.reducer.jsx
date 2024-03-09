@@ -20,7 +20,7 @@ export const userReducer = (state = initialState, action ) => {
                 status: "MODIFIED",
                 userData: {
                     ...state.userData,
-                    firstName: action.payload.firstNAME
+                    firstName: action.payload
                 } 
             } 
         case LOGOUT: {
