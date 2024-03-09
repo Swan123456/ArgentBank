@@ -41,10 +41,6 @@ function User() {
       if (response.ok) {
         const data = await response.json();
         const firstName = data.body.firstName;
-        /* 
-                    Checking that the query response is indeed retrieved
-                    console.log(data) 
-                */
         dispatch(updateFirstName(firstName));
         setDisplay(!display);
       } else {
@@ -62,8 +58,7 @@ function User() {
           <h2>
             Welcome back
             <br />
-            {console.log(userData)}
-            {userData.firstname} {userData.lastname} !
+            {userData.firstName} !
           </h2>
           <button className="edit-button" onClick={() => setDisplay(!display)}>
             Edit Name
